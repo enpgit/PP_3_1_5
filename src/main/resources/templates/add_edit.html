@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить / изменить пользователя</title>
+</head>
+<body>
+<form th:method="${add} ? 'POST' : 'PATCH'"
+      th:action="${add} ? @{/admin} : @{/admin/edit_user/{id}(id=${user.getId()})}"
+      th:object="${user}">
+
+    <table th:border="2">
+        <caption><h2>Пользователь</h2></caption>
+        <thead>
+        <tr>
+            <th th:width="50">Наименование</th>
+            <th th:width="100">Значение</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><label for="name">Имя</label></td>
+            <td><input type="text" th:field="*{username}" id="name"/></td>
+        </tr>
+        <tr>
+            <td><label for="age">Возраст</label></td>
+            <td><input type="text" th:field="*{age}" id="age"/></td>
+        </tr>
+        <tr>
+            <td><label for="email">Почта</label></td>
+            <td><input type="text" th:field="*{email}" id="email"/></td>
+        </tr>
+        <tr>
+            <td><label for="email">Пароль</label></td>
+            <td><input type="text" th:field="*{password}" id="password"/></td>
+        </tr>
+        </tbody>
+    </table>
+    <br>
+    <div style="margin-left:20px;">
+        <input type="submit" value="Сохранить"/>
+    </div>
+</form>
+<div style="margin-left:20px;">
+    <br>
+    <form th:method="GET" th:action="@{/admin}">
+        <input type="submit" value="Отменить"/>
+    </form>
+    <br>
+    <form th:method="GET" th:action="@{/logout}">
+        <input type="submit" value="Выход"/>
+    </form>
+</div>
+</body>
+</html>
