@@ -8,34 +8,33 @@
 <form th:method="${add} ? 'POST' : 'PATCH'"
       th:action="${add} ? @{/admin} : @{/admin/edit_user/{id}(id=${user.getId()})}"
       th:object="${user}">
+    <h2>Пользователь</h2>
+    <label for="name">Логин</label>
+    <input type="text" th:field="*{username}" id="name"/>
+    <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Error</p>
+    <br><br>
+    <label for="age">Возраст</label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Error</p>
+    <br><br>
+    <label for="email">Почта</label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error</p>
+    <br><br>
+    <label for="password">Пароль</label>
+    <input type="text" th:field="*{password}" id="password"/>
+    <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error</p>
+    <br><br>
+    <label for="role">Роли:</label>
+    <input type="checkbox" name="roles"
+           th:each="role : ${roles}"
+           th:value="${role.getId()}"
+           th:text="${role.getRole()}"
+           th:field="*{roles}"
+           id="role"/>
 
-    <table th:border="2">
-        <caption><h2>Пользователь</h2></caption>
-        <thead>
-        <tr>
-            <th th:width="50">Наименование</th>
-            <th th:width="100">Значение</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><label for="name">Имя</label></td>
-            <td><input type="text" th:field="*{username}" id="name"/></td>
-        </tr>
-        <tr>
-            <td><label for="age">Возраст</label></td>
-            <td><input type="text" th:field="*{age}" id="age"/></td>
-        </tr>
-        <tr>
-            <td><label for="email">Почта</label></td>
-            <td><input type="text" th:field="*{email}" id="email"/></td>
-        </tr>
-        <tr>
-            <td><label for="email">Пароль</label></td>
-            <td><input type="text" th:field="*{password}" id="password"/></td>
-        </tr>
-        </tbody>
-    </table>
+    <p th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}">Error</p>
+    <br>
     <br>
     <div style="margin-left:20px;">
         <input type="submit" value="Сохранить"/>

@@ -10,7 +10,7 @@
     <caption><h2>Пользователи</h2></caption>
     <thead>
     <tr>
-        <th th:width="100">Имя</th>
+        <th th:width="100">Логин</th>
         <th th:width="50">Возраст</th>
         <th th:width="100">Почта</th>
         <th th:width="100">Пароль</th>
@@ -25,7 +25,11 @@
         <td th:utext="${user.getAge()}">...</td>
         <td th:utext="${user.getEmail()}">...</td>
         <td th:utext="${user.getPassword()}">...</td>
-        <td th:utext="${user.getRoles()}">...</td>
+        <td>
+            <ul th:each="role: ${user.getRoles()}">
+                <li th:text="${role.getRole()}"></li>
+            </ul>
+        </td>
         <td>
             <form th:method="GET" th:action="@{/admin/edit_user/{id}(id=${user.getId()})}">
                 <input type="submit" value="Изменить"/>

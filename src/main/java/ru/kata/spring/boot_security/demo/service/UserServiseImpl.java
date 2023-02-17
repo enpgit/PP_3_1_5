@@ -2,15 +2,15 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
-
-
 import java.util.List;
 
 @Service
@@ -18,9 +18,12 @@ public class UserServiseImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    public UserServiseImpl(UserRepository userRepository) {
+    public UserServiseImpl(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -44,6 +47,7 @@ public class UserServiseImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
@@ -56,10 +60,15 @@ public class UserServiseImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void editUser(User updateUser) {
+
+        if (!updateUser.getPassword().equals(getUserById(updateUser.getId()).getPassword())){
+            updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
+        }
         userRepository.save(updateUser);
     }
 
     @Override
+    @Transactional //обходим LAZY загрузку
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = getUserByUsername(username);
         if (user == null) {
