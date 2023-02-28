@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <title>User page</title>
+</head>
+<body>
+
+<div class="container-fluid m-0 p-0">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="col-11 d-inline">
+            <span class="text-white h5">
+                <th:block class="font-weight-bold"
+                          th:text="${thisUser.getUsername()}">
+                </th:block>
+                <span class="font-weight-light" th:each="role: ${thisUser.getRoles()}">
+                    <span th:text=" ' with roles: ' + ${role.getRole().replace('ROLE_', '')}">
+                        Role
+                    </span>
+                </span>
+            </span>
+        </div>
+        <div class="col-1 text-white h5">
+            <a class="nav-link active text-secondary" href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="row">
+        <div class="col-2 pt-2 m-0 p-0  bg-white">
+            <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active ml-3" href="/user" role="tab" aria-selected="true">User</a>
+            </div>
+        </div>
+        <div class="col-10 pt-2  bg-light">
+            <h1>User information-page</h1>
+            <div class="col-12 bg-light border pt-2 pb-2 ps-3">
+                <h5>About user</h5>
+            </div>
+            <div class="mb-3 bg-white pt-3 pb-3 border">
+                <div class="pe-4 ps-4 pt-2 ">
+                    <table class="table table-striped border-top">
+                        <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">First name</th>
+                            <th scope="col">Last name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${thisUser.getId()}"></td>
+                            <td th:text="${thisUser.getUsername()}"></td>
+                            <td th:text="${thisUser.getLastname()}"></td>
+                            <td th:text="${thisUser.getAge()}"></td>
+                            <td th:text="${thisUser.getEmail()}"></td>
+                            <td>
+                                <span
+                                        th:each="role: ${thisUser.getRoles()}">
+                                    <span th:text="${role.getRole().replace('ROLE_', '')}">
+                                        Role
+                                    </span>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+</body>
+</html>

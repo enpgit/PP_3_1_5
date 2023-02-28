@@ -20,8 +20,7 @@ public class UserController {
 
     @GetMapping
     public String getAllUsers(ModelMap model, Principal principal) {
-        model.addAttribute("thisUser"
-                , userService.getUserByUsername(principal.getName()));
-        return "view-this-user";
+        model.addAttribute("thisUser", userService.getUserByUsername(principal.getName()));
+        return "show-user";
     }
 }

@@ -3,13 +3,11 @@ package ru.kata.spring.boot_security.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
-
-import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 @RequestMapping("/admin")
@@ -26,8 +24,11 @@ public class AdminController {
     }
 
     @GetMapping
-    public String getAllUsers(ModelMap model) {
+    public String getAllUsers(ModelMap model, Principal principal) {
+        System.out.println(principal.getName());
         model.addAttribute("allUser", userService.getAllUsers());
+        //model.addAttribute("admin", userService.getUserByUsername(principal.getName()));
+        //model.addAttribute("roles", roleService.getAllRoles());
         return "view-users";
     }
 
@@ -43,6 +44,7 @@ public class AdminController {
     public String saveUser(@ModelAttribute("user") User user, ModelMap model) {
         userService.saveUser(user);
         model.addAttribute("add", true);
+
         return "redirect:/admin";
     }
 
