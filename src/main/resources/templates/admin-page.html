@@ -121,8 +121,7 @@
                                                         </button>
                                                     </div>
                                                     <form th:method="PATCH"
-                                                          th:action="@{/admin/edit}"
-
+                                                          th:action="@{/admin/edit/{id}(id=${user.id})}"
                                                           th:object="${user}">
                                                         <div class="modal-body text-center font-weight-bold col-12 offset-3 col-md-6 offset-md-3">
                                                             <div class="form-group mb-2">
@@ -145,10 +144,13 @@
                                                             <div class="form-group mb-2">
                                                                 <label for="editModalLastname"
                                                                        class="form-label fw-bold">Last name</label>
-                                                                <input type="text"
+                                                                <input class="form-control"
+                                                                       th:type="text"
+                                                                       th:name="lastName"
+                                                                       id="editModalLastname"
+                                                                       placeholder="Last name"
                                                                        th:value="${user.lastname}"
-                                                                       class="form-control "
-                                                                       id="editModalLastname"/>
+                                                                       required>
                                                             </div>
                                                             <div class="form-group mb-2">
                                                                 <label for="editModalAge"
@@ -169,11 +171,9 @@
                                                             <div class="form-group mb-2">
                                                                 <label for="editModalPassword"
                                                                        class="form-label fw-bold">Password</label>
-                                                                <input type="password"
-                                                                       th:value="${user.password}"
-                                                                       class="form-control"
-                                                                       id="editModalPassword"
-                                                                />
+                                                                <input th:name="password" type="text"
+                                                                       class="form-control" id="editModalPassword"
+                                                                       value=""/>
                                                             </div>
                                                             <label class="form-label fw-bold">Role</label>
                                                             <select class="w-100" name="roles" multiple size="2">
@@ -300,11 +300,11 @@
                             <div class="card-body">
                                 <div class="text-center d-flex justify-content-center">
                                     <form th:method="POST" th:action="@{/admin}"
-                                          th:object="${newUser}">
+                                          th:object="${user}">
                                         <div class="form-group">
                                             <label for="firstName" class="form-label fw-bold">First
                                                 name</label>
-                                            <input type="text" name="firstName" th:field="${newUser.firstname}"
+                                            <input type="text" name="firstName" th:field="${user.firstname}"
                                                    class="form-control"
                                                    id="firstName" placeholder="First name"/>
                                         </div>
@@ -312,14 +312,14 @@
                                         <div class="form-group">
                                             <label for="lastName" class="form-label fw-bold">Last
                                                 name</label>
-                                            <input type="text" name="lastName" th:field="${newUser.lastname}"
+                                            <input type="text" name="lastName" th:field="${user.lastname}"
                                                    class="form-control"
                                                    id="lastName" placeholder="Last name"/>
                                         </div>
 
                                         <div class="form-group">
                                             <label for="age" class="form-label fw-bold">Age</label>
-                                            <input type="number" name="age" th:field="${newUser.age}"
+                                            <input type="number" name="age" th:field="${user.age}"
                                                    class="form-control"
                                                    id="age"
                                                    min="0" max="120" placeholder="Age"/>
@@ -327,7 +327,7 @@
 
                                         <div class="form-group">
                                             <label for="email" class="form-label fw-bold">Email</label>
-                                            <input type="email" name="email" th:field="${newUser.email}"
+                                            <input type="email" name="email" th:field="${user.email}"
                                                    class="form-control"
                                                    id="email" placeholder="Email"/>
                                         </div>
@@ -335,7 +335,7 @@
                                         <div class="form-group">
                                             <label for="password"
                                                    class="form-label fw-bold">Password</label>
-                                            <input type="password" name="password" th:field="${newUser.password}"
+                                            <input type="password" name="password" th:field="${user.password}"
                                                    class="form-control"
                                                    id="password"
                                                    minlength="3" placeholder="Password"/>

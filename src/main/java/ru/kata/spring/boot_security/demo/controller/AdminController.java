@@ -26,7 +26,7 @@ public class AdminController {
     }
 
     @GetMapping
-    public String getAllUsers(ModelMap model, @ModelAttribute("newUser") User newUser
+    public String getAllUsers(ModelMap model, @ModelAttribute("user") User user
             , Principal principal) {
         User authenticatedUser = userService.getUserByUsername(principal.getName());
         model.addAttribute("authenticatedUser", authenticatedUser);
@@ -45,9 +45,9 @@ public class AdminController {
     }
 
     // EDIT USER
-    @PatchMapping("/edit")
-    public String updateUser(@ModelAttribute("editedUser") User editedUser) {
-        userService.editUser(editedUser);
+    @PatchMapping("/edit/{id}")
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.editUser(user);
         return "redirect:/admin";
     }
 
