@@ -55,9 +55,9 @@ public class AdminController {
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable("id") Long id, Principal principal) {
         boolean checkDeletingActivedUser = userService.getUserByUsername(principal.getName()).equals(userService.getUserById(id));
-
+        userService.deleteUser(id);
         if (checkDeletingActivedUser) {
-            userService.deleteUser(id);
+
             return "redirect:/process_login";
         } else {
             return "redirect:/admin";
