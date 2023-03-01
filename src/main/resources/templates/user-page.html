@@ -9,15 +9,18 @@
 </head>
 <body>
 
-<div class="container-fluid m-0 p-0">
+<div class="container-fluid m-0 pr-3 pl-0">
     <nav class="navbar navbar-dark bg-dark">
         <div class="col-11 d-inline">
             <span class="text-white h5">
                 <th:block class="font-weight-bold"
-                          th:text="${thisUser.getUsername()}">
+                          th:text="${authenticatedUser.getUsername()}">
                 </th:block>
-                <span class="font-weight-light" th:each="role: ${thisUser.getRoles()}">
-                    <span th:text=" ' with roles: ' + ${role.getRole().replace('ROLE_', '')}">
+                <span class="font-weight-light" th:text="with + ' roles:'">
+                    text
+                </span>
+                <span class="font-weight-light" th:each="authenticatedUserRole: ${authenticatedUser.getRoles()}">
+                    <span th:text="${authenticatedUserRole.getRole().replace('ROLE_', '')}">
                         Role
                     </span>
                 </span>
@@ -29,14 +32,29 @@
     </nav>
 
     <div class="row">
-        <div class="col-2 pt-2 m-0 p-0  bg-white">
-            <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
-                <a class="nav-link active ml-3" href="/user" role="tab" aria-selected="true">User</a>
-            </div>
+        <div class="col-2 p-0 mt-2">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li th:each="authenticatedUserRole : ${authenticatedUserRoles}"
+                    th:if="${authenticatedUserRole.authority.contains('ROLE_ADMIN')}" class="nav-item">
+                    <a th:href="@{/admin}" class="nav-link ml-3"
+                       aria-current="page">
+                        Admin
+                    </a>
+                </li>
+                <li class="nav-item"
+                    th:each="authenticatedUserRole : ${authenticatedUserRoles}"
+                    th:if="${authenticatedUserRole.authority.contains('ROLE_USER')}">
+                    <a th:href="@{/user}" class="nav-link link-dark active ml-3" >
+                        User
+                    </a>
+                </li>
+            </ul>
         </div>
-        <div class="col-10 pt-2  bg-light">
+
+
+        <div class="col-10 mt-2 bg-light  min-vh-100">
             <h1>User information-page</h1>
-            <div class="col-12 bg-light border pt-2 pb-2 ps-3">
+            <div class="col-12 bg-light border pt-2 pb-2 ps-3 ">
                 <h5>About user</h5>
             </div>
             <div class="mb-3 bg-white pt-3 pb-3 border">
@@ -54,15 +72,15 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td th:text="${thisUser.getId()}"></td>
-                            <td th:text="${thisUser.getUsername()}"></td>
-                            <td th:text="${thisUser.getLastname()}"></td>
-                            <td th:text="${thisUser.getAge()}"></td>
-                            <td th:text="${thisUser.getEmail()}"></td>
+                            <td th:text="${authenticatedUser.getId()}"></td>
+                            <td th:text="${authenticatedUser.getUsername()}"></td>
+                            <td th:text="${authenticatedUser.getLastname()}"></td>
+                            <td th:text="${authenticatedUser.getAge()}"></td>
+                            <td th:text="${authenticatedUser.getEmail()}"></td>
                             <td>
                                 <span
-                                        th:each="role: ${thisUser.getRoles()}">
-                                    <span th:text="${role.getRole().replace('ROLE_', '')}">
+                                        th:each="authenticatedUserRole: ${authenticatedUser.getRoles()}">
+                                    <span th:text="${authenticatedUserRole.getRole().replace('ROLE_', '')}">
                                         Role
                                     </span>
                                 </span>
@@ -74,9 +92,7 @@
             </div>
         </div>
     </div>
-
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -84,5 +100,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
         crossorigin="anonymous"></script>
+
 </body>
 </html>
