@@ -5,26 +5,29 @@
     <title>Пользователи</title>
 </head>
 <body>
+
 <br>
-<table th:border="2">
-    <caption><h2>Пользователи</h2></caption>
+<table>
     <thead>
     <tr>
-        <th th:width="100">Логин</th>
-        <th th:width="50">Возраст</th>
-        <th th:width="100">Почта</th>
-        <th th:width="100">Пароль</th>
-        <th>Роли</th>
-        <th th:width="150"></th>
-        <th th:width="150"></th>
+        <th th:width="100">ID</th>
+        <th th:width="100">First Name</th>
+        <th th:width="100">Last Name</th>
+        <th th:width="50">Age</th>
+        <th th:width="100">Email</th>
+        <th>Role</th>
+        <th th:width="150">Edit</th>
+        <th th:width="150">Delete</th>
     </tr>
     </thead>
     <tbody>
+
     <tr th:each="user : ${allUser}">
-        <td th:utext="${user.getUsername()}">...</td>
+        <td th:utext="${user.getId()}">...</td>
+        <td th:utext="${user.getFirstname()}">...</td>
+        <td th:utext="${user.getLastname()}">...</td>
         <td th:utext="${user.getAge()}">...</td>
         <td th:utext="${user.getEmail()}">...</td>
-        <td th:utext="${user.getPassword()}">...</td>
         <td>
             <ul th:each="role: ${user.getRoles()}">
                 <li th:text="${role.getRole()}"></li>
