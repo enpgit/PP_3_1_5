@@ -10,6 +10,7 @@ import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -25,39 +26,39 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping
-    public String getAllUsers(ModelMap model, @ModelAttribute("user") User user
+    //All users REST
+    @GetMapping("/api/users")
+    public List<User> getAllUsersRest(ModelMap model, @ModelAttribute("user") User user
             , Principal principal) {
         User authenticatedUser = userService.getUserByUsername(principal.getName());
         model.addAttribute("authenticatedUser", authenticatedUser);
         model.addAttribute("authenticatedUserRoles", authenticatedUser.getRoles());
         model.addAttribute("users", userService.getAllUsers());
         model.addAttribute("roles", roleService.getAllRoles());
-        return "admin-page";
+        List<User> users = userService.getAllUsers();
+        return users;
     }
 
-
-    // ADD USER
-    @PostMapping
-    public String saveUser(@ModelAttribute("user") User newUser) {
-        userService.saveUser(newUser);
-        return "redirect:/admin";
+    //Add users REST
+    @PostMapping("/api/users")
+    public String saveUserRest(@RequestBody User user) {
+        userService.saveUser(user);
+        return "Пользователь добавлен ";
     }
 
-    // EDIT USER
-    @PatchMapping("/edit/{id}")
-    public String updateUser(@ModelAttribute("user") User user) {
+    //Edit user REST
+    @PatchMapping("/api/users")
+    public String updateUserRest(@RequestBody User user) {
         userService.editUser(user);
-        return "redirect:/admin";
+        return "Пользователь изменен ";
     }
 
-    // DELETE USER
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable("id") Long id, Principal principal) {
+    // Delete user REST
+    @DeleteMapping("/api/users/{id}")
+    public String deleteUserRest(@PathVariable("id") Long id, Principal principal) {
         boolean checkDeletingActivedUser = userService.getUserByUsername(principal.getName()).equals(userService.getUserById(id));
         userService.deleteUser(id);
         if (checkDeletingActivedUser) {
-
             return "redirect:/process_login";
         } else {
             return "redirect:/admin";

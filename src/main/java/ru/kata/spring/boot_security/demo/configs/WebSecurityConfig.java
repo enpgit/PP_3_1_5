@@ -33,44 +33,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                //.antMatchers("/process_login").permitAll()
+                .antMatchers("/process_login").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                //.antMatchers("/users").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .successHandler(successUserHandler)
                 .loginPage("/process_login")
-//                .usernameParameter("email")
-//                .passwordParameter("password")
                 .permitAll()
                 .and()
                 .logout()
-//                .logoutRequestMatcher((new AntPathRequestMatcher("/logout")))
-//                .logoutSuccessUrl("/process_login")
                 .permitAll();
     }
-
-    // аутентификация inMemory
-//    @Bean
-//    @Override
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("user")
-//                        .roles("USER")
-//                        .build();
-//        UserDetails admin =
-//                User.withDefaultPasswordEncoder()
-//                        .username("admin")
-//                        .password("admin")
-//                        .roles("ADMIN")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user, admin);
-//    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
