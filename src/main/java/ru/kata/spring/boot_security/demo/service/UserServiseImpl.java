@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -61,8 +62,9 @@ public class UserServiseImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public void editUser(User updateUser) {
-
-        if(!Objects.equals(userRepository.getById(updateUser.getId()).getPassword(), updateUser.getPassword())) {
+        if (!Objects.equals(updateUser.getPassword(), null)) {
+            updateUser.setPassword(userRepository.getById(updateUser.getId()).getPassword());
+        } else if (!Objects.equals(userRepository.getById(updateUser.getId()).getPassword(), updateUser.getPassword())) {
             updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         }
         userRepository.save(updateUser);
@@ -76,6 +78,6 @@ public class UserServiseImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException(String.format("Пользователь '%s' не найден", username));
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername()
-        , user.getPassword(), user.getAuthorities());
+                , user.getPassword(), user.getAuthorities());
     }
 }

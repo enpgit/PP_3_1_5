@@ -177,11 +177,12 @@
                                                             </div>
                                                             <label class="form-label fw-bold">Role</label>
                                                             <select class="w-100" name="roles" multiple size="2"
-                                                                    required="required">
+                                                                    required="required" id="roles">
                                                                 <option th:each="role : ${roles}"
                                                                         th:value="${role.getId()}"
-                                                                        th:name="roles"
-                                                                        th:text="${role.getRole().replace('ROLE_', '')}">
+                                                                        th:name="user.roles"
+                                                                        th:text="${role.getRole().replace('ROLE_', '')}"
+                                                                        th:selected="${user.roles.contains(role)}">
                                                                 </option>
                                                             </select>
                                                         </div>
