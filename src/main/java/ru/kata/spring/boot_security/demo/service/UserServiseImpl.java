@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiseImpl implements UserService, UserDetailsService {
@@ -61,7 +62,7 @@ public class UserServiseImpl implements UserService, UserDetailsService {
     @Transactional
     public void editUser(User updateUser) {
 
-        if (!updateUser.getPassword().equals(getUserById(updateUser.getId()).getPassword())){
+        if(!Objects.equals(userRepository.getById(updateUser.getId()).getPassword(), updateUser.getPassword())) {
             updateUser.setPassword(passwordEncoder.encode(updateUser.getPassword()));
         }
         userRepository.save(updateUser);

@@ -176,9 +176,11 @@
                                                                        value=""/>
                                                             </div>
                                                             <label class="form-label fw-bold">Role</label>
-                                                            <select class="w-100" name="roles" multiple size="2">
+                                                            <select class="w-100" name="roles" multiple size="2"
+                                                                    required="required">
                                                                 <option th:each="role : ${roles}"
                                                                         th:value="${role.getId()}"
+                                                                        th:name="roles"
                                                                         th:text="${role.getRole().replace('ROLE_', '')}">
                                                                 </option>
                                                             </select>
