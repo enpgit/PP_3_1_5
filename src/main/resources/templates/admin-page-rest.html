@@ -257,6 +257,72 @@
     </div>
 </div>
 
+<!--Редактирование (модельное окно)-->
+<div class="modal fade" id="edit" tabindex="-1" role="dialog"
+     aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form id="formEditUser">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit user</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="form-group required">
+                        <div class="controls">
+                            <p>
+                                <label for="editId"><strong>ID</strong>
+                                    <input class="form-control" type="number" name="id" id="editId"
+                                           disabled>
+                                </label>
+                            </p>
+                            <p>
+                                <label for="editFirstName"><strong>First name</strong>
+                                    <input class="form-control" type="text" name="firstName" id="editFirstName">
+                                </label>
+                            </p>
+                            <p>
+                                <label for="editLastName"><strong>Last name</strong>
+                                    <input class="form-control" type="text" name="lastName" id="editLastName">
+                                </label>
+                            </p>
+                            <p>
+                                <label for="editAge"><strong>Age</strong>
+                                    <input class="form-control" type="number" name="age" id="editAge">
+                                </label>
+                            </p>
+                            <p>
+                                <label for="editEmail"><strong>Email</strong>
+                                    <input class="form-control" type="text" name="email" id="editEmail">
+                                </label>
+                            </p>
+                            <p>
+                                <label for="editPassword"><strong>Password</strong>
+                                    <input class="form-control" type="text" name="password" id="editPassword">
+                                </label>
+                            </p>
+                            <label class="container-fluid col-6" for="rolesEditUser"><strong>Role</strong>
+                                <select class="form-control" id="rolesEditUser" name="roles" multiple size="2">
+
+                                </select>
+                            </label>
+                            <h1></h1>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="editFormCloseButton" class="btn btn-secondary"
+                                    data-dismiss="modal">Close
+                            </button>
+                            <button type="submit" class="btn btn-danger btn btn-primary">Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -267,5 +333,6 @@
 <script src="/js/auth-admin.js"></script>
 <script src="/js/create-user.js"></script>
 <script src="/js/delete-user.js"></script>
+<script src="/js/edit-user.js"></script>
 </body>
 </html>

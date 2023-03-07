@@ -18,8 +18,8 @@ fetch(rolesUrl)
 
 formNew.addEventListener('submit', addNewUser);
 
-function addNewUser(e) {
-    e.preventDefault();
+function addNewUser(event) {
+    event.preventDefault();
     let newUserRoles = [];
     for (let i = 0; i < rolesSave.options.length; i++) {
         if (rolesSave.options[i].selected) newUserRoles.push({
